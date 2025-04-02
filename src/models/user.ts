@@ -22,10 +22,10 @@ class UserModel implements User {
       return null;
     }
     return new UserModel(
-      result.data.id,
-      result.data.name,
-      result.data.email,
-      result.data.avatar,
+      result.data.id ?? "",
+      result.data.display_name ?? "",
+      result.data.email ?? "",
+      "",
     );
   }
 }

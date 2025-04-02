@@ -1,16 +1,14 @@
 import LogoutButton from "@/components/ui/logoutButton";
 import Image from "next/image";
-import { createClient } from "@/lib/utils/supabase/server";
 import { redirect } from "next/navigation";
 
 export default async function Profile() {
-  const supabase = await createClient();
+  const res = await fetch("http://localhost:3000/api/users", {
+    cache: "no-store",
+  });
+  const users = await res.json();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
+  if (!users) {
     return redirect("/signin"); // 🔐 redirection si non connecté
   }
 

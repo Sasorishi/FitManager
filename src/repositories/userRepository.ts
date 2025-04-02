@@ -1,20 +1,27 @@
-import { faker } from "@faker-js/faker";
+import { supabase } from "@/lib/utils/supabase/client";
 import { User } from "@/types/user";
 
 // Interface UserRepository pour définir la signature des méthodes
 export interface IUserRepository {
-  getUsers(count: number): User[]; // Typage de la méthode getUsers
+  getUsers(count: number): Promise<User[]>; // Typage de la méthode getUsers
 }
 
 class UserRepository implements IUserRepository {
-  // Typage de la méthode getUsers pour renvoyer un tableau d'utilisateurs
-  getUsers(count: number): User[] {
-    return Array.from({ length: count }, () => ({
-      id: faker.string.uuid(),
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      avatar: faker.image.avatar(),
-    }));
+  async getUsers(count: number): Promise<User[]> {
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .limit(count);
+
+    if (error) {
+      console.error(
+        "Erreur lors de la récupération des utilisateurs :",
+        error.message,
+      );
+      return [];
+    }
+
+    return data as User[];
   }
 }
 

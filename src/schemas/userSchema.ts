@@ -1,14 +1,17 @@
 import { z } from "zod";
 
-// Définition du schéma de validation pour un utilisateur
+// Schéma de validation pour la table enrichie `users`
 export const userSchema = z.object({
-  id: z.string().uuid(), // id doit être un UUID
-  name: z.string().min(3), // nom doit avoir au moins 3 caractères
-  email: z.string().email(), // email doit être valide
-  avatar: z.string().url(), // avatar doit être une URL valide
+  id: z.string().uuid(), // UUID unique
+  email: z.string().email(), // Email valide
+  display_name: z.string().min(1), // Nom d'affichage obligatoire
+  role: z.string().default("athlete"), // Rôle utilisateur
+  calorie_goal: z.number().min(1000).max(6000).default(2000), // Objectif calorique
+  plan_type: z.string().optional(), // Type de programme (optionnel)
+  created_at: z.date().default(new Date()), // Date de création
 });
 
 // Validation des données utilisateur
 export const validateUser = (data: unknown) => {
-  return userSchema.safeParse(data); // `safeParse` renvoie un résultat avec succès ou erreur
+  return userSchema.safeParse(data);
 };

@@ -1,19 +1,39 @@
 "use client";
 
 import { useState } from "react";
-import { createFakeUser } from "@/services/createFakeUserService";
 
 export default function FakerPage() {
   const [status, setStatus] = useState("");
 
   const handleCreateFakeUser = async () => {
     setStatus("Création en cours...");
-    const user = await createFakeUser();
+    try {
+      const res = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ count: 1 }),
+      });
 
-    if (user) {
-      setStatus(`✅ Utilisateur créé : ${user.email} / ${user.password}`);
-    } else {
-      setStatus("❌ Échec de la création");
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Erreur lors de la création : ${errorText}`);
+      }
+
+      const users = await res.json();
+
+      if (users?.length > 0) {
+        const user = users[0];
+        setStatus(
+          `✅ Utilisateur créé : ${user.email}${user.password ? " / " + user.password : ""}`,
+        );
+      } else {
+        setStatus("❌ Aucun utilisateur créé");
+      }
+    } catch (error: any) {
+      console.error(error);
+      setStatus(`❌ Erreur lors de la création : ${error.message}`);
     }
   };
 
