@@ -22,7 +22,7 @@ export default function LoginPage() {
       if (!res.ok) {
         setError(result.error || "Erreur de connexion");
       } else {
-        router.push("/profile");
+        router.push("/dashboard");
       }
     } catch (err: any) {
       setError("Erreur réseau");
