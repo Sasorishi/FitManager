@@ -166,91 +166,8 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "header",
-    header: "Header",
-    cell: ({ row }) => {
-      return <TableCellViewer item={row.original} />;
-    },
-    enableHiding: false,
-  },
-  {
-    accessorKey: "type",
-    header: "Section Type",
-    cell: ({ row }) => (
-      <div className="w-32">
-        <Badge variant="outline" className="text-muted-foreground px-1.5">
-          {row.original.type}
-        </Badge>
-      </div>
-    ),
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge variant="outline" className="text-muted-foreground px-1.5">
-        {row.original.status === "Done" ? (
-          <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
-        ) : (
-          <IconLoader />
-        )}
-        {row.original.status}
-      </Badge>
-    ),
-  },
-  {
-    accessorKey: "target",
-    header: () => <div className="w-full text-right">Target</div>,
-    cell: ({ row }) => (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
-          });
-        }}
-      >
-        <Label htmlFor={`${row.original.id}-target`} className="sr-only">
-          Target
-        </Label>
-        <Input
-          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-          defaultValue={row.original.target}
-          id={`${row.original.id}-target`}
-        />
-      </form>
-    ),
-  },
-  {
-    accessorKey: "limit",
-    header: () => <div className="w-full text-right">Limit</div>,
-    cell: ({ row }) => (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
-            loading: `Saving ${row.original.header}`,
-            success: "Done",
-            error: "Error",
-          });
-        }}
-      >
-        <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
-          Limit
-        </Label>
-        <Input
-          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
-          defaultValue={row.original.limit}
-          id={`${row.original.id}-limit`}
-        />
-      </form>
-    ),
-  },
-  {
-    accessorKey: "reviewer",
-    header: "Reviewer",
+    accessorKey: "client",
+    header: "Client",
     cell: ({ row }) => {
       const isAssigned = row.original.reviewer !== "Assign reviewer";
 
@@ -281,6 +198,107 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         </>
       );
     },
+    enableHiding: false,
+  },
+  {
+    accessorKey: "goal",
+    header: "Goal",
+    cell: ({ row }) => (
+      <div className="w-32">
+        <Badge variant="outline" className="text-muted-foreground px-1.5">
+          {row.original.type}
+        </Badge>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <Badge variant="outline" className="text-muted-foreground px-1.5">
+        {row.original.status === "Done" ? (
+          <IconCircleCheckFilled className="fill-green-500 dark:fill-green-400" />
+        ) : (
+          <IconLoader />
+        )}
+        {row.original.status}
+      </Badge>
+    ),
+  },
+  {
+    accessorKey: "age",
+    header: () => <div className="w-full text-right">Age</div>,
+    cell: ({ row }) => (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
+            loading: `Saving ${row.original.header}`,
+            success: "Done",
+            error: "Error",
+          });
+        }}
+      >
+        <Label htmlFor={`${row.original.id}-target`} className="sr-only">
+          Age
+        </Label>
+        <Input
+          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
+          defaultValue={row.original.target}
+          id={`${row.original.id}-target`}
+        />
+      </form>
+    ),
+  },
+  {
+    accessorKey: "size",
+    header: () => <div className="w-full text-right">Size</div>,
+    cell: ({ row }) => (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
+            loading: `Saving ${row.original.header}`,
+            success: "Done",
+            error: "Error",
+          });
+        }}
+      >
+        <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
+          Size
+        </Label>
+        <Input
+          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
+          defaultValue={`${row.original.limit} m`}
+          id={`${row.original.id}-limit`}
+        />
+      </form>
+    ),
+  },
+  {
+    accessorKey: "weight",
+    header: () => <div className="w-full text-right">Weight</div>,
+    cell: ({ row }) => (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          toast.promise(new Promise((resolve) => setTimeout(resolve, 1000)), {
+            loading: `Saving ${row.original.header}`,
+            success: "Done",
+            error: "Error",
+          });
+        }}
+      >
+        <Label htmlFor={`${row.original.id}-limit`} className="sr-only">
+          Weight
+        </Label>
+        <Input
+          className="hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent"
+          defaultValue={`${row.original.limit} kg`}
+          id={`${row.original.id}-limit`}
+        />
+      </form>
+    ),
   },
   {
     id: "actions",
@@ -468,7 +486,7 @@ export function DataTable({
           </DropdownMenu>
           <Button variant="outline" size="sm">
             <IconPlus />
-            <span className="hidden lg:inline">Add Section</span>
+            <span className="hidden lg:inline">Add Client</span>
           </Button>
         </div>
       </div>
