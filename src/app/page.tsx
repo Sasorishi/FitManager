@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { userService } from "@/services/userService";
 import { User as UserInterface } from "@/types/user";
-import UserTable from "@/components/userTable";
+import UserTable from "@/components/user-table";
 
 export default async function Home() {
   const users: UserInterface[] = await userService.getUsers(5);
