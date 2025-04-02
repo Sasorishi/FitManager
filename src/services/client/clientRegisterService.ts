@@ -30,7 +30,7 @@ export class RegisterClientService {
     }
 
     const user = {
-      id_client: authResult.id,
+      id: authResult.id,
       email,
       password,
       first_name,
@@ -42,7 +42,7 @@ export class RegisterClientService {
       height: faker.number.float({ min: 1.5, max: 2.0 }).toFixed(2),
       weight: faker.number.float({ min: 50, max: 100 }).toFixed(1),
       allergies: "",
-      id_coach: null,
+      coach_id: null,
     };
 
     console.log("📦 Données insérées :", user);

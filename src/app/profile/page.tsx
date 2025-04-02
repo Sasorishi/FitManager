@@ -1,15 +1,61 @@
+"use client";
+
 import LogoutButton from "@/components/ui/logoutButton";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default async function Profile() {
-  const res = await fetch("http://localhost:3000/api/users", {
-    cache: "no-store",
+export default function Profile() {
+  const [sessions, setSessions] = useState([]);
+  const [newSession, setNewSession] = useState({
+    coach_id: "",
+    client_id: "",
+    start_date: "",
+    end_date: "",
+    session_type: "",
   });
-  const users = await res.json();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [users, setUsers] = useState(null);
+
+  useEffect(() => {
+    async function fetchSessions() {
+      const response = await fetch("/api/training");
+      const data = await response.json();
+      setSessions(data);
+    }
+
+    fetchSessions();
+  }, []);
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const res = await fetch("/api/users");
+      const data = await res.json();
+      setUsers(data);
+    }
+    fetchUsers();
+  }, []);
+
+  const handleInputChange = (e) => {
+    setNewSession({ ...newSession, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/training", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newSession),
+    });
+    if (response.ok) {
+      const updatedSessions = await response.json();
+      setSessions([...sessions, updatedSessions]);
+      setIsModalOpen(false);
+    }
+  };
 
   if (!users) {
-    return redirect("/signin"); // 🔐 redirection si non connecté
+    return <div>Chargement...</div>;
   }
 
   return (
@@ -115,6 +161,67 @@ export default async function Profile() {
           <li className="bg-gray-100 p-3 rounded-full text-gray-700">Docker</li>
           <li className="bg-gray-100 p-3 rounded-full text-gray-700">SQL</li>
         </ul>
+      </section>
+
+      <section className="mt-8 bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-semibold text-gray-900">
+          Training Sessions
+        </h2>
+        <ul>
+          {sessions.map((session) => (
+            <li key={session.id}> {/* Use session.id as the unique key */}
+              {session.session_type} - {session.start_date}
+            </li>
+          ))}
+        </ul>
+        <button onClick={() => setIsModalOpen(true)}>Add Session</button>
+        {isModalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setIsModalOpen(false)}>
+                &times;
+              </span>
+              <form onSubmit={handleSubmit}>
+                <input
+                  name="coach_id"
+                  value={newSession.coach_id}
+                  onChange={handleInputChange}
+                  placeholder="Coach ID"
+                  required
+                />
+                <input
+                  name="client_id"
+                  value={newSession.client_id}
+                  onChange={handleInputChange}
+                  placeholder="Client ID"
+                  required
+                />
+                <input
+                  name="start_date"
+                  type="date"
+                  value={newSession.start_date}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  name="end_date"
+                  type="date"
+                  value={newSession.end_date}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  name="session_type"
+                  value={newSession.session_type}
+                  onChange={handleInputChange}
+                  placeholder="Session Type"
+                  required
+                />
+                <button type="submit">Add Session</button>
+              </form>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
