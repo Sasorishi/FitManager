@@ -36,8 +36,8 @@ export class DrizzleTrainingSessionRepository
       const session = sessions.length > 0 ? sessions[0] : null;
       return session
         ? new TrainingSessionModel(
-            session.coach_id,
-            session.client_id,
+            session.id_coach,
+            session.id_client,
             new Date(session.start_date),
             new Date(session.end_date),
             session.session_type,
@@ -56,8 +56,8 @@ export class DrizzleTrainingSessionRepository
       return sessions.map(
         (session) =>
           new TrainingSessionModel(
-            session.coach_id,
-            session.client_id,
+            session.id_coach,
+            session.id_client,
             new Date(session.start_date),
             new Date(session.end_date),
             session.session_type,
@@ -75,8 +75,8 @@ export class DrizzleTrainingSessionRepository
       await db
         .update(training_sessions)
         .set({
-          coach_id: session.coach_id,
-          client_id: session.client_id,
+          id_coach: session.coach_id,
+          id_client: session.client_id,
           start_date: session.start_date.toISOString(),
           end_date: session.end_date.toISOString(),
           session_type: session.session_type,

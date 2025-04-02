@@ -32,9 +32,10 @@ export const training_sessions = pgTable("training_session", {
 
 // Table exercise
 export const exercises = pgTable("exercise", {
-  id: uuid("id").primaryKey().defaultRandom(),
+  id: uuid("id").defaultRandom().primaryKey(),
   session_id: uuid("session_id").notNull(),
   name: text("name").notNull(),
   repetitions: integer("repetitions").notNull(),
   sets: integer("sets").notNull(),
+  created_at: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });

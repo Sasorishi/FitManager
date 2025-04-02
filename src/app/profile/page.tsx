@@ -14,8 +14,18 @@ export default function Profile() {
     end_date: "",
     session_type: "",
   });
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(
+    null,
+  );
+  const [exerciseForm, setExerciseForm] = useState({
+    name: "",
+    repetitions: "",
+    sets: "",
+  });
+  const [exercises, setExercises] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState(null);
+  const [allExercises, setAllExercises] = useState({});
 
   useEffect(() => {
     async function fetchSessions() {
@@ -36,8 +46,66 @@ export default function Profile() {
     fetchUsers();
   }, []);
 
+  useEffect(() => {
+    const fetchAllExercises = async () => {
+      try {
+        const exercisesBySession = {};
+        for (const session of sessions) {
+          const response = await fetch(`/api/exercise?sessionId=${session.id}`);
+          const data = await response.json();
+          exercisesBySession[session.id] = data;
+        }
+        setAllExercises(exercisesBySession);
+      } catch (error) {
+        console.error("Failed to fetch exercises:", error);
+      }
+    };
+
+    fetchAllExercises();
+  }, [sessions]);
+
   const handleInputChange = (e) => {
     setNewSession({ ...newSession, [e.target.name]: e.target.value });
+  };
+
+  const fetchExercises = async (sessionId: string) => {
+    try {
+      const response = await fetch(`/api/exercise?sessionId=${sessionId}`);
+      const data = await response.json();
+      setExercises(data);
+    } catch (error) {
+      console.error("Failed to fetch exercises:", error);
+    }
+  };
+
+  const handleAddExercise = (sessionId: string) => {
+    setSelectedSessionId(sessionId);
+    fetchExercises(sessionId);
+  };
+
+  const handleExerciseChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setExerciseForm({ ...exerciseForm, [e.target.name]: e.target.value });
+  };
+
+  const handleExerciseSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!selectedSessionId) return;
+
+    await fetch("/api/exercise", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        session_id: selectedSessionId,
+        ...exerciseForm,
+        repetitions: Number(exerciseForm.repetitions),
+        sets: Number(exerciseForm.sets),
+      }),
+    });
+
+    // Reset
+    setExerciseForm({ name: "", repetitions: "", sets: "" });
+    setSelectedSessionId(null);
   };
 
   const handleSubmit = async (e) => {
@@ -169,8 +237,21 @@ export default function Profile() {
         </h2>
         <ul>
           {sessions.map((session) => (
-            <li key={session.id}> {/* Use session.id as the unique key */}
+            <li key={session.id} className="mb-2">
               {session.session_type} - {session.start_date}
+              <ul>
+                {allExercises[session.id]?.map((exercise) => (
+                  <li key={exercise.id}>
+                    {exercise.name} - {exercise.repetitions} reps, {exercise.sets} sets
+                  </li>
+                ))}
+              </ul>
+              <button
+                className="ml-2 text-blue-500 underline"
+                onClick={() => handleAddExercise(session.id)}
+              >
+                Ajouter des exercices
+              </button>
             </li>
           ))}
         </ul>
@@ -221,6 +302,46 @@ export default function Profile() {
               </form>
             </div>
           </div>
+        )}
+        {selectedSessionId && (
+          <form
+            onSubmit={handleExerciseSubmit}
+            className="mt-4 bg-gray-50 p-4 rounded"
+          >
+            <h3 className="text-lg font-semibold mb-2">Ajouter un exercice</h3>
+            <input
+              name="name"
+              value={exerciseForm.name}
+              onChange={handleExerciseChange}
+              placeholder="Nom de l'exercice"
+              required
+              className="block mb-2 w-full"
+            />
+            <input
+              name="repetitions"
+              value={exerciseForm.repetitions}
+              onChange={handleExerciseChange}
+              placeholder="Répétitions"
+              required
+              type="number"
+              className="block mb-2 w-full"
+            />
+            <input
+              name="sets"
+              value={exerciseForm.sets}
+              onChange={handleExerciseChange}
+              placeholder="Séries"
+              required
+              type="number"
+              className="block mb-2 w-full"
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Ajouter
+            </button>
+          </form>
         )}
       </section>
     </div>
