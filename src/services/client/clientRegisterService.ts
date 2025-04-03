@@ -1,6 +1,7 @@
 import { IAuthService } from "@/services/auth/authService";
 import { faker } from "@faker-js/faker";
-import { DrizzleClientRepository } from "@/repositories/drizzleRepository";
+import { DrizzleClientRepository } from "@/repositories/drizzleClientRepository";
+import { ClientModel } from "@/models/client";
 
 export class RegisterClientService {
   constructor(
@@ -9,7 +10,7 @@ export class RegisterClientService {
   ) {}
 
   async execute() {
-    console.log("🔥 Lancement RegisterClientService");
+    console.log(" Lancement RegisterClientService");
 
     const email = faker.internet.email();
     const password = faker.internet.password();
@@ -22,10 +23,10 @@ export class RegisterClientService {
       password,
       display_name,
     );
-    console.log("🧪 Résultat register Supabase Auth:", authResult);
+    console.log(" Résultat register Supabase Auth:", authResult);
 
     if (!authResult?.id) {
-      console.error("❌ Création Supabase Auth échouée");
+      console.error(" Création Supabase Auth échouée");
       return null;
     }
 
@@ -45,7 +46,7 @@ export class RegisterClientService {
       coach_id: null,
     };
 
-    console.log("📦 Données insérées :", user);
+    console.log(" Données insérées :", user);
 
     const ok = await this.repository.insert(user);
     return ok ? user : null;

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { RegisterClientService } from "@/services/client/clientRegisterService";
-import { DrizzleClientRepository } from "@/repositories/drizzleRepository";
+import { DrizzleClientRepository } from "@/repositories/drizzleClientRepository";
 import { createClient } from "@/lib/utils/supabase/server";
 import { SupabaseAuthServiceServer } from "@/services/supabase/supabaseRegisterService";
 
