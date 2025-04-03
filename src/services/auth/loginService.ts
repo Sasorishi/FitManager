@@ -1,10 +1,14 @@
 import { SupabaseAuthServiceServer } from "@/services/supabase/supabaseLoginService";
 import { ILoginService } from "./authService";
 
-const authService = new SupabaseAuthServiceServer();
-
 export class LoginService implements ILoginService {
+  private authService: SupabaseAuthServiceServer;
+
+  constructor(authService: SupabaseAuthServiceServer) {
+    this.authService = authService;
+  }
+
   async login(email: string, password: string) {
-    return await authService.login(email, password);
+    return await this.authService.login(email, password);
   }
 }
