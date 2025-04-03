@@ -28,7 +28,7 @@ export function LoginForm({
       const result = await res.json();
 
       if (!res.ok) {
-        setError(result.error || "Erreur de connexion");
+        setError(result.error);
       } else {
         router.push("/dashboard");
       }
