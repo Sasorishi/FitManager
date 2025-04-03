@@ -8,8 +8,6 @@ import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import ProtectedRoute from "@/services/auth/protectedRouteService";
 
-import data from "./data.json";
-
 export default function Page() {
   return (
     <ProtectedRoute>
@@ -31,7 +29,7 @@ export default function Page() {
                 <div className="px-4 lg:px-6">
                   <ChartAreaInteractive />
                 </div>
-                <DataTable data={data} />
+                <DataTable />
               </div>
             </div>
           </div>
