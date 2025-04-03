@@ -239,7 +239,15 @@ export function DataTable({
   const [isAddClientModalOpen, setIsAddClientModalOpen] = React.useState(false);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const handleAddClient = async (client: { first_name: string; last_name: string; email: string; goal: string; height: string; weight: string; allergies: string }) => {
+  const handleAddClient = async (client: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    goal: string;
+    height: string;
+    weight: string;
+    allergies: string;
+  }) => {
     try {
       const response = await fetch("/api/client", {
         method: "POST",
@@ -252,10 +260,7 @@ export function DataTable({
         throw new Error("Failed to add client");
       }
       const newClient = await response.json();
-      setData((prevData) => [
-        ...prevData,
-        newClient,
-      ]);
+      setData((prevData) => [...prevData, newClient]);
     } catch (error) {
       console.error("Error adding client:", error);
     }
@@ -390,11 +395,19 @@ export function DataTable({
                   })}
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button variant="outline" size="sm" onClick={() => setIsAddClientModalOpen(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setIsAddClientModalOpen(true)}
+            >
               <IconPlus />
               <span className="hidden lg:inline">Add Client</span>
             </Button>
-            <AddClientModal isOpen={isAddClientModalOpen} onClose={() => setIsAddClientModalOpen(false)} onSubmit={handleAddClient} />
+            <AddClientModal
+              isOpen={isAddClientModalOpen}
+              onClose={() => setIsAddClientModalOpen(false)}
+              onSubmit={handleAddClient}
+            />
           </div>
         </div>
         <TabsContent

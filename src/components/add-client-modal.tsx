@@ -14,18 +14,22 @@ import { Button } from "@/components/ui/button";
 interface AddClientModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (client: { 
-    first_name: string; 
-    last_name: string; 
-    email: string; 
-    goal: string; 
-    height: string; 
-    weight: string; 
-    allergies: string 
+  onSubmit: (client: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    goal: string;
+    height: string;
+    weight: string;
+    allergies: string;
   }) => void;
 }
 
-const AddClientModal: React.FC<AddClientModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const AddClientModal: React.FC<AddClientModalProps> = ({
+  isOpen,
+  onClose,
+  onSubmit,
+}) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
