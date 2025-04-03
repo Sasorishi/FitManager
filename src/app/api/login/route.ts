@@ -6,9 +6,7 @@ export const POST = async (req: NextRequest) => {
     const { email, password } = await req.json();
 
     if (!email || !password) {
-      return NextResponse.json(
-        { status: 400 },
-      );
+      return NextResponse.json({ status: 400 });
     }
 
     const authService = new SupabaseAuthServiceServer();

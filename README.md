@@ -3,9 +3,11 @@
 FitManager is a web application designed to help sports coaches efficiently manage their clients, assign training sessions, track progress, and set personalized nutrition goals.
 
 ## Project Overview
+
 FitManager is a comprehensive fitness management application designed to help coaches and clients manage training sessions, nutrition plans, and overall fitness goals. The application leverages a robust backend to handle user authentication, data storage, and business logic.
 
 ## Features
+
 - **Client Management**: Store and manage client profiles (height, weight, allergies, goals, etc.).
 - **Training Sessions**: Assign workouts with structured schedules, alternating sessions, and rest days.
 - **Performance Tracking**: Monitor progress over time.
@@ -17,9 +19,10 @@ FitManager is a comprehensive fitness management application designed to help co
 - **Client and Coach Management**: Keep track of client and coach information.
 
 ## Database Schema
+
 The following UML diagram represents the database schema used in FitManager:
 
-![UML Diagram](assets/uml.png)
+![UML Diagram](https://drive.google.com/uc?export=view&id=1HhtejAuii60WhIhf-xRi1JsD7yqJ89hs)
 
 ## Tech Stack
 
@@ -33,6 +36,7 @@ The following UML diagram represents the database schema used in FitManager:
 - **Architecture**: SOLID principles
 
 ## Technologies Used
+
 - **TypeScript**: For type-safe JavaScript development.
 - **Jest**: For unit testing services and ensuring code reliability.
 - **Supabase**: For authentication and database management.
@@ -46,6 +50,7 @@ Before setting up the project, ensure you have the following installed:
 - **Git** (for version control)
 
 ## Setup Instructions
+
 1. Clone the repository.
 2. Install dependencies using `make install`.
 3. Set up environment variables in `.env.local`.
@@ -105,6 +110,7 @@ The project uses a **Makefile** to simplify common tasks:
    ```
 
 ## Contribution Guidelines
+
 Contributions are welcome! Please fork the repository and submit a pull request for review.
 
 ## Deployment
@@ -120,4 +126,5 @@ make test
 ```
 
 ## License
+
 This project is licensed under the MIT License.
