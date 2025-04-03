@@ -2,6 +2,28 @@
 
 FitManager is a web application designed to help sports coaches efficiently manage their clients, assign training sessions, track progress, and set personalized nutrition goals.
 
+## Project Overview
+
+FitManager is a comprehensive fitness management application designed to help coaches and clients manage training sessions, nutrition plans, and overall fitness goals. The application leverages a robust backend to handle user authentication, data storage, and business logic.
+
+## Features
+
+- **Client Management**: Store and manage client profiles (height, weight, allergies, goals, etc.).
+- **Training Sessions**: Assign workouts with structured schedules, alternating sessions, and rest days.
+- **Performance Tracking**: Monitor progress over time.
+- **Nutrition Planning**: Define calorie intake goals.
+- **User-Friendly Interface**: Designed for both coaches and clients.
+- **User Authentication**: Secure login and registration using Supabase.
+- **Training Session Management**: Create, update, and track training sessions.
+- **Nutrition Plans**: Manage personalized nutrition plans for clients.
+- **Client and Coach Management**: Keep track of client and coach information.
+
+## Database Schema
+
+The following UML diagram represents the database schema used in FitManager:
+
+![UML Diagram](https://drive.google.com/uc?export=view&id=1HhtejAuii60WhIhf-xRi1JsD7yqJ89hs)
+
 ## Tech Stack
 
 - **Framework**: Next.js (App Router)
@@ -13,6 +35,12 @@ FitManager is a web application designed to help sports coaches efficiently mana
 - **Testing**: Jest
 - **Architecture**: SOLID principles
 
+## Technologies Used
+
+- **TypeScript**: For type-safe JavaScript development.
+- **Jest**: For unit testing services and ensuring code reliability.
+- **Supabase**: For authentication and database management.
+
 ## Prerequisites
 
 Before setting up the project, ensure you have the following installed:
@@ -21,33 +49,12 @@ Before setting up the project, ensure you have the following installed:
 - **npm** / **yarn** / **pnpm** (for package management)
 - **Git** (for version control)
 
-## Getting Started
+## Setup Instructions
 
-First, install dependencies:
-
-```bash
-make install
-```
-
-Then, start the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Features
-
-- **Client Management**: Store and manage client profiles (height, weight, allergies, goals, etc.).
-- **Training Sessions**: Assign workouts with structured schedules, alternating sessions, and rest days.
-- **Performance Tracking**: Monitor progress over time.
-- **Nutrition Planning**: Define calorie intake goals.
-- **User-Friendly Interface**: Designed for both coaches and clients.
+1. Clone the repository.
+2. Install dependencies using `make install`.
+3. Set up environment variables in `.env.local`.
+4. Run tests using `make test`.
 
 ## Development Commands
 
@@ -101,6 +108,10 @@ The project uses a **Makefile** to simplify common tasks:
    ```bash
    vercel --prod
    ```
+
+## Contribution Guidelines
+
+Contributions are welcome! Please fork the repository and submit a pull request for review.
 
 ## Deployment
 
