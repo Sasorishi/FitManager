@@ -1,9 +1,13 @@
-import { createClient } from "@/lib/utils/supabase/server";
+import { SupabaseLogoutService } from "@/services/supabase/supabaseLogoutService";
 
-export class SupabaseLogoutService {
-  async logout(): Promise<{ error: any }> {
-    const supabase = await createClient();
-    const { error } = await supabase.auth.signOut();
-    return { error };
+export class LogoutService {
+  private logoutService: SupabaseLogoutService;
+
+  constructor(logoutService: SupabaseLogoutService) {
+    this.logoutService = logoutService;
+  }
+
+  async logout() {
+    return await this.logoutService.logout();
   }
 }

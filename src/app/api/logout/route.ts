@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { SupabaseLogoutService } from "@/services/auth/logoutService";
+import { SupabaseLogoutService } from "@/services/supabase/supabaseLogoutService";
 
 export const POST = async (_req: NextRequest) => {
   try {
