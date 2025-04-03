@@ -242,7 +242,8 @@ export default function Profile() {
               <ul>
                 {allExercises[session.id]?.map((exercise) => (
                   <li key={exercise.id}>
-                    {exercise.name} - {exercise.repetitions} reps, {exercise.sets} sets
+                    {exercise.name} - {exercise.repetitions} reps,{" "}
+                    {exercise.sets} sets
                   </li>
                 ))}
               </ul>
