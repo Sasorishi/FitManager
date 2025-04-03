@@ -7,7 +7,6 @@ export const POST = async (req: NextRequest) => {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: "Email et mot de passe requis" },
         { status: 400 },
       );
     }
